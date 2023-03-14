@@ -8,12 +8,12 @@ app.listen(port, async () => {
 	await connect();
   console.log(`Listening: http://localhost:${port}`);
 	// running this pre-release
-	// await writeMapsToDB();
-	// await writeImpMapsToDB();
-	// await writeUnfMapsToDB();
-	// await writeBonusesToDB();
-	// await updateMapsFromKzgo();
-	// await fetchWrsFromApi();
+	await writeMapsToDB();
+	await updateMapsFromKzgo();
+	await writeImpMapsToDB();
+	await writeUnfMapsToDB();
+	await writeBonusesToDB();
+	await fetchWrsFromApi();
 
 
 	import('./api/crons');
