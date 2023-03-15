@@ -7,7 +7,7 @@ const router = Router();
 
 router.post(
 	'/',
-	// requireUser('Elon'),
+	requireUser('Elon'),
 	validateRequest({
 		body: User
 	}),
