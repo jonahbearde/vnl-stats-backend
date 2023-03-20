@@ -6,7 +6,7 @@ import articles from './articles/articles.route'
 import unc from './uncompleted/uncompleted.route'
 import bonus from './bonus/bonus.route'
 import users from './users/users.route'
-import comments from './comments/comments.route'
+import resources from './resources/resources.route'
 const router = express.Router();
 
 router.get<{}, MessageResponse>('/', (req, res) => {
@@ -22,6 +22,6 @@ router.use('/articles', articles)
 router.use('/uncompleted', unc);
 router.use('/bonus', bonus);
 router.use('/users', users);
-router.use('/comments', comments);
+router.use('/resources', resources);
 
 export default router;

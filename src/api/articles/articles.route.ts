@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { object, string } from 'zod';
 import { ParamId } from "../../interfaces/ParamId";
 import { ParamTag } from "../../interfaces/ParamTag";
 import { requireUser, validateRequest } from "../../middlewares";
 import * as ArticlesHandlers from "./articles.controller";
-import { Article } from "./articles.model";
+import { Article, Comment } from "./articles.model";
 
 const router = Router();
 
@@ -34,7 +35,6 @@ router.put(
 	requireUser('Admin'),
 	validateRequest({
 		params: ParamId,
-		body: Article
 	}),
 	ArticlesHandlers.updateArticleHandler
 )
@@ -46,6 +46,23 @@ router.delete(
 		params: ParamId
 	}),
 	ArticlesHandlers.deleteArticleHandler
+)
+
+router.post(
+	'/comments/:id',
+	validateRequest({
+		params: ParamId,
+		body: Comment
+	}),
+	ArticlesHandlers.createCommentHandler
+)
+
+router.delete(
+	'/comments/:id/:user_id',
+	validateRequest({
+		params: object({ id: string(), user_id: string() }),
+	}),
+	ArticlesHandlers.deleteCommentHandler
 )
 
 export default router;
