@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ParamId } from "../../interfaces/ParamId";
 import { ParamTag } from "../../interfaces/ParamTag";
 import { Article, ArticleWithId, Comment } from "./articles.model";
-import { createArticle, createComment, deleteArticle, deleteComment, findAllArticles, findArticlesByTag, updateArticle } from "./articles.service";
+import { createArticle, createComment, deleteArticle, deleteComment, findAllArticles, findArticlesByTag, updateArticle, updateComment } from "./articles.service";
 
 export async function createArticleHandler(req: Request<{}, ArticleWithId, Article>, res: Response<ArticleWithId>, next: NextFunction) {
 	try {
@@ -50,7 +50,7 @@ export async function getArticlesByTagHandler(req: Request<ParamTag, Article[]>,
 export async function updateArticleHandler(req: Request<ParamId, Article, {}>, res: Response<Article>, next: NextFunction) {
 	try {
 		const id = parseInt(req.params.id);
-		const result = await updateArticle(id, { ...req.body }, { returnDocument: 'after'});
+		const result = await updateArticle(id, { ...req.body }, { returnDocument: 'after' });
 		if (!result.value) {
 			res.sendStatus(404);
 			return;
@@ -90,11 +90,26 @@ export async function createCommentHandler(req: Request<ParamId, ArticleWithId, 
 	}
 }
 
-export async function deleteCommentHandler(req: Request<{ id: string, user_id: string }, {}, Comment>, res: Response<{}>, next: NextFunction) {
+export async function updateCommentHandler(req: Request<{ id: string, comment_id: string }, Comment, Comment>, res: Response<Comment>, next: NextFunction) {
 	try {
 		const id = parseInt(req.params.id);
-		const user_id = parseInt(req.params.user_id);
-		const result = await deleteComment(id, user_id);
+		const comment = req.body;
+		const result = await updateComment(id, comment);
+		if (!result.value) {
+			res.sendStatus(404);
+			return;
+		}
+		res.json(comment);
+	} catch (error) {
+		next(error);
+	}
+}
+
+export async function deleteCommentHandler(req: Request<{ id: string, comment_id: string }, {}, Comment>, res: Response<{}>, next: NextFunction) {
+	try {
+		const id = parseInt(req.params.id);
+		const comment_id = parseInt(req.params.comment_id);
+		const result = await deleteComment(id, comment_id);
 		if (!result.value) {
 			res.sendStatus(404);
 			return;

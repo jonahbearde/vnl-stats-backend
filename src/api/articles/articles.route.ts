@@ -57,10 +57,19 @@ router.post(
 	ArticlesHandlers.createCommentHandler
 )
 
-router.delete(
-	'/comments/:id/:user_id',
+router.put(
+	'/comments/:id',
 	validateRequest({
-		params: object({ id: string(), user_id: string() }),
+		params: ParamId,
+		body: Comment
+	}),
+	ArticlesHandlers.updateCommentHandler
+)
+
+router.delete(
+	'/comments/:id/:comment_id',
+	validateRequest({
+		params: object({ id: string(), comment_id: string() }),
 	}),
 	ArticlesHandlers.deleteCommentHandler
 )

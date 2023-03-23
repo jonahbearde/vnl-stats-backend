@@ -10,6 +10,7 @@ import { db } from '../../utils/connect';
 // }
 
 export const Comment = z.object({
+	id: z.number(),
 	content: z.string(),
 	user_id: z.number(),
 	user_name: z.string(),

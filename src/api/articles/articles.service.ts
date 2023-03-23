@@ -22,10 +22,14 @@ export async function deleteArticle(id: number, options?: FindOneAndDeleteOption
 	return Articles.findOneAndDelete({ id }, { ...options });
 }
 
-export async function createComment(id: number, comment: Comment, options?: FindOneAndUpdateOptions) {
-	return Articles.findOneAndUpdate({ id }, { $push: { comments: comment } }, { ...options });
+export async function createComment(article_id: number, comment: Comment, options?: FindOneAndUpdateOptions) {
+	return Articles.findOneAndUpdate({ id: article_id }, { $push: { comments: comment } }, { ...options });
 }
 
-export async function deleteComment(id: number, user_id: number, options?: FindOneAndUpdateOptions) {
-	return Articles.findOneAndUpdate({ id }, { $pull: { comments: { user_id } } }, { ...options });
+export async function updateComment(article_id: number, comment: Comment, options?: FindOneAndUpdateOptions) {
+	return Articles.findOneAndUpdate({ id: article_id, 'comments.id': comment.id }, { $set: { 'comments.$.content': comment.content, 'comments.$.updated_on': comment.updated_on } }, { ...options })
+}
+
+export async function deleteComment(article_id: number, comment_id: number, options?: FindOneAndUpdateOptions) {
+	return Articles.findOneAndUpdate({ id: article_id }, { $pull: { comments: { id: comment_id } } }, { ...options });
 }

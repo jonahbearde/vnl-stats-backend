@@ -14,7 +14,8 @@ const config = {
 };
 const client = sheetdb(config);
 
-// run this pre-release
+// pre-release functions
+
 export const writeMapsToDB = async () => {
 	try {
 		const data = await client.read({ limit: 1000, sheet: 'Map Tiers' });
