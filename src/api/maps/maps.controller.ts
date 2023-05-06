@@ -10,12 +10,19 @@ export async function getDistributionHandler(req: Request, res: Response, next: 
 		const results = await findAllMaps();
 		const maps = await results.toArray();
 		if (maps) {
-			let distribution: number[] = [0, 0, 0, 0, 0, 0, 0, 0];
-			for (const map of maps) {
-				distribution[map.tpTier - 1]++;
+			let distributions = {
+				tp: [0, 0, 0, 0, 0, 0, 0, 0],
+				pro: [0, 0, 0, 0, 0, 0, 0, 0]
 			}
-			distribution.push(maps.length);
-			res.json(distribution);
+			for (const map of maps) {
+				if(map.name.startsWith('kzpro')){
+					distributions.pro[map.tpTier -1]++;
+					continue;
+				}
+				distributions.tp[map.tpTier -1]++;
+				distributions.pro[map.tpTier - 1]++;
+			}
+			res.json(distributions);
 		} else {
 			res.status(404);
 			throw new Error('cannot find all maps');
