@@ -6,7 +6,7 @@ const process = async () => {
 	try {
 		console.log('job start at', new Date());
 		for (const run_type of ['pro', 'tp']) {
-			const recentWrsData = await axios.get(`https://kztimerglobal.com/api/v2.0/records/top/recent?modes_list_string=kz_vanilla&tickrate=128&stage=0&has_teleports=${run_type === 'tp'}&place_top_at_least=1&limit=20`);
+			const recentWrsData = await axios.get(`https://kztimerglobal.com/api/v2.0/records/top/recent?modes_list_string=kz_vanilla&tickrate=128&stage=0&has_teleports=${run_type === 'tp'}&place_top_at_least=1&limit=200`);
 			const recentWrs = recentWrsData.data;
 
 			const cursor = Wrs.find({ has_teleports: run_type === 'tp' });
