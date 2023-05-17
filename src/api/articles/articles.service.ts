@@ -6,7 +6,7 @@ export async function createArticle(doc: OptionalUnlessRequiredId<Article>, opti
 }
 
 export async function findAllArticles(options?: FindOptions) {
-	return Articles.find({}, { ...options });
+	return Articles.find({}, { ...options }).sort({ updated_on: -1 });
 }
 
 
