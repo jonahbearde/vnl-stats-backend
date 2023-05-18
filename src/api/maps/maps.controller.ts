@@ -15,10 +15,9 @@ export async function getDistributionHandler(req: Request, res: Response, next: 
 				pro: [0, 0, 0, 0, 0, 0, 0, 0]
 			}
 			for (const map of maps) {
-				distributions.pro[map.tpTier - 1]++;
+				distributions.pro[map.proTier - 1]++;
 				if(!map.name.startsWith('kzpro')){
 					distributions.tp[map.tpTier -1]++;
-					continue;
 				}
 			}
 			res.json(distributions);
