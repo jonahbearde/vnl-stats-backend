@@ -3,21 +3,22 @@ import { createUser, findUserByName } from "./users.service";
 import { User } from "./users.model";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import axios from "axios";
 import dotenv from 'dotenv';
 
 dotenv.config()
 
-// import SteamID from "steamid";
+export async function getSteamUserHandler(req: Request, res: Response, next: NextFunction) {
+	try {
+		const { steamid } = req.query;
+		const result = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${process.env.STEAM_API_KEY}&steamid=${steamid}`);
 
-// export async function validateSteamIdHandler(req: Request, res: Response, next: NextFunction) {
-// 	const sid = new SteamID(req.params.id);
+		res.json(result.data)
 
-// 	if (sid.isValidIndividual()) {
-// 		res.json({ steamid64: sid.getSteamID64() });
-// 	} else {
-// 		res.json(null);
-// 	}
-// }
+	} catch (error) {
+		next(error)
+	}
+}
 
 export async function loginHandler(req: Request, res: Response, next: NextFunction) {
 	try {

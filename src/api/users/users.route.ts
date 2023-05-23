@@ -19,6 +19,11 @@ router.post(
 	UserHandlers.signUpHandler
 )
 
+router.get(
+	'/steamuser',
+	UserHandlers.getSteamUserHandler
+)
+
 router.post(
 	'/login',
 	UserHandlers.loginHandler
