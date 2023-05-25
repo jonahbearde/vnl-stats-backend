@@ -1,7 +1,6 @@
 import * as z from 'zod';
 import { db } from '../../utils/connect';
 import {WithId} from 'mongodb';
-import { number } from 'zod';
 
 
 export const Wr = z.object({

@@ -6,13 +6,12 @@ import cors from 'cors';
 import * as middlewares from './middlewares';
 import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
-import { writeMapsToDB } from './utils/updateMapsFromApi';
 
 dotenv.config();
 
 const app = express();
 
-app.use(morgan('dev'));
+app.use(morgan('common'));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
