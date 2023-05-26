@@ -6,11 +6,11 @@ export async function createBonus(doc: OptionalUnlessRequiredId<Bonus>, options?
 }
 
 export async function findAllBonuses(options?: FindOptions) {
-	return Bonuses.find({}, { ...options });
+	return Bonuses.find({}, { ...options }).sort({ bonou_number: 1 });
 }
 
 export async function findBonusesByName(name: string, options?: FindOptions) {
-	return Bonuses.find({ map_name: name }, { ...options }).sort({ bonou_number: -1 });
+	return Bonuses.find({ map_name: name }, { ...options });
 }
 
 export async function updateBonus(id: number, updateFilter: MatchKeysAndValues<Bonus>, options?: FindOneAndUpdateOptions) {
