@@ -10,7 +10,7 @@ export async function findAllBonuses(options?: FindOptions) {
 }
 
 export async function findBonusesByName(name: string, options?: FindOptions) {
-	return Bonuses.find({ map_name: name }, { ...options }).sort({ bonou_number: 1 });
+	return Bonuses.find({ map_name: name }, { ...options });
 }
 
 export async function updateBonus(id: number, updateFilter: MatchKeysAndValues<Bonus>, options?: FindOneAndUpdateOptions) {

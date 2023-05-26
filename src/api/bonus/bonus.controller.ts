@@ -7,8 +7,8 @@ import { createBonus, deleteBonus, findAllBonuses, findBonusesByName, updateBonu
 export async function createBonusHandler(req: Request<{}, BonusWithId, Bonus>, res: Response<BonusWithId>, next: NextFunction) {
 	try {
 		const body = req.body;
-		const createResult = await createBonus({...body});
-		if(!createResult.acknowledged) throw new Error('error creating an uncompleted map');
+		const createResult = await createBonus({ ...body });
+		if (!createResult.acknowledged) throw new Error('error creating an uncompleted map');
 		res.status(201);
 		res.json({
 			_id: createResult.insertedId,
@@ -16,15 +16,15 @@ export async function createBonusHandler(req: Request<{}, BonusWithId, Bonus>, r
 		})
 	} catch (error) {
 		next(error);
-	}	
+	}
 }
 
 
-export async function getAllBonusesHandler(req: Request<{}, Bonus[]>, res: Response<Bonus[]>, next: NextFunction){
+export async function getAllBonusesHandler(req: Request<{}, Bonus[]>, res: Response<Bonus[]>, next: NextFunction) {
 	try {
 		const cursor = await findAllBonuses();
 		const results = await cursor.toArray();
-		if(results.length === 0){
+		if (results.length === 0) {
 			res.status(404);
 			throw new Error('error finding all uncompleted maps');
 		}
@@ -34,11 +34,11 @@ export async function getAllBonusesHandler(req: Request<{}, Bonus[]>, res: Respo
 	}
 }
 
-export async function getBonusesByNameHandler(req: Request<ParamMapName, Bonus[]>, res: Response<Bonus[]>, next: NextFunction){
+export async function getBonusesByNameHandler(req: Request<ParamMapName, Bonus[]>, res: Response<Bonus[]>, next: NextFunction) {
 	try {
-		const cursor = await findBonusesByName(req.params.name);
+		const cursor = await findBonusesByName(req.params.name, { sort: { bonus_number: 1 } });
 		const results = await cursor.toArray();
-		if(results.length === 0){
+		if (results.length === 0) {
 			res.json([]);
 		}
 		res.json(results);
@@ -47,11 +47,11 @@ export async function getBonusesByNameHandler(req: Request<ParamMapName, Bonus[]
 	}
 }
 
-export async function updateBonusHandler(req: Request<ParamId, Bonus, Bonus>, res: Response<Bonus>, next: NextFunction){
+export async function updateBonusHandler(req: Request<ParamId, Bonus, Bonus>, res: Response<Bonus>, next: NextFunction) {
 	try {
 		const id = parseInt(req.params.id);
-		const result = await updateBonus(id, {...req.body}, {returnDocument: 'after', upsert: true});
-		if(!result.value){
+		const result = await updateBonus(id, { ...req.body }, { returnDocument: 'after', upsert: true });
+		if (!result.value) {
 			res.sendStatus(404);
 			return;
 		}
@@ -61,11 +61,11 @@ export async function updateBonusHandler(req: Request<ParamId, Bonus, Bonus>, re
 	}
 }
 
-export async function deleteBonusHandler(req: Request<ParamId, {}, Bonus>, res: Response<{}>, next: NextFunction){
+export async function deleteBonusHandler(req: Request<ParamId, {}, Bonus>, res: Response<{}>, next: NextFunction) {
 	try {
 		const id = parseInt(req.params.id);
 		const result = await deleteBonus(id);
-		if(!result.value){
+		if (!result.value) {
 			res.sendStatus(404);
 			return;
 		}
