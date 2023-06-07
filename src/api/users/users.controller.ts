@@ -12,7 +12,6 @@ export async function getSteamUserHandler(req: Request, res: Response, next: Nex
 	try {
 		const { steamid } = req.query;
 
-		console.log('api key', process.env.STEAM_API_KEY)
 		const result = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2?key=${process.env.STEAM_API_KEY}&steamids=${steamid}`);
 
 		res.json(result.data)

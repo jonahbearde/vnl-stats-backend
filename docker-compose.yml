@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  vanillakz:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vanillakz
+    restart: unless-stopped
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+
+
+volumes:
+  node_modules:
