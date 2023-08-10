@@ -1,11 +1,10 @@
 version: '3'
 
 services:
-  vanillakz:
+  express-ts-starter:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: vanillakz
     restart: unless-stopped
     ports:
       - ${PORT}:${PORT}
